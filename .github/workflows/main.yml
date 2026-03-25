@@ -27,4 +27,4 @@ jobs:
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_PERSONAL_TOKEN }}
         run: |
-          python deploy_job_notebook.py
+          python Job_Deployment_Notebook.py
