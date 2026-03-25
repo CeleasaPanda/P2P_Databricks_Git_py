@@ -30,24 +30,21 @@ for task in job_config["tasks"]:
         "task_key": task["task_key"],
 
         "notebook_task": {
-            "notebook_path": task["notebook_path"],
+            "notebook_path": task["notebook_task"]["notebook_path"],
             "source": "WORKSPACE",
 
             "base_parameters": {
-                "primary_keys": ",".join(task.get("primary_keys", [])),
-                "timestamp_column": task.get("timestamp_column", "")
+                "primary_keys": task["notebook_task"]["base_parameters"].get("primary_keys", ""),
+                "timestamp_column": task["notebook_task"]["base_parameters"].get("timestamp_column", "")
             }
         },
 
         "environment_key": "serverless"
     }
 
+    # Handle dependency
     if "depends_on" in task:
-        task_payload["depends_on"] = [
-            {"task_key": dep} for dep in task["depends_on"]
-        ]
-
-    tasks.append(task_payload)
+        task_payload["depends_on"] = task["depends_on"]
 
 # ===== JOB PAYLOAD =====
 job_payload = {
