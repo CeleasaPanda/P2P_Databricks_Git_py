@@ -1,18 +1,22 @@
 job:
-name: cp_job
+  name: cp_job
 
-tasks:
+  tasks:
+    - task_key: ingest_task
+      notebook_task:
+        notebook_path: /Workspace/Users/celeasa@prisoft.com/databricks_github_demo/Ingestion Notebook for Git
 
-   - task_key: ingest_task
-     notebook_path: /Workspace/Users/celeasa@prisoft.com/databricks_github_demo/Ingestion Notebook for Git
-     primary_keys:
-        - id
-     timestamp_column: updated_at
+        base_parameters:
+          primary_keys: id
+          timestamp_column: updated_at
 
     - task_key: transform_task
-      notebook_path: /Workspace/Users/celeasa@prisoft.com/databricks_github_demo/Transformation Notebook For Git
       depends_on:
-        - ingest_task
-      primary_keys:
-        - id
-      timestamp_column: updated_at
+        - task_key: ingest_task
+
+      notebook_task:
+        notebook_path: /Workspace/Users/celeasa@prisoft.com/databricks_github_demo/Transformation Notebook For Git
+
+        base_parameters:
+          primary_keys: id
+          timestamp_column: updated_at
