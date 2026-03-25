@@ -16,7 +16,7 @@ headers = {
 }
 
 # ===== READ YAML =====
-with open("job_config.yaml", "r") as f:
+with open("Job_Configuaration.yml", "r") as f:
     config = yaml.safe_load(f)
 
 job_config = config["job"]
